@@ -1,0 +1,499 @@
+/* ================================
+   ONBOARDING PAGE
+================================ */
+
+.onboarding-page {
+    min-height: 100vh;
+    padding: 36px 28px 56px;
+    background: #f7f8fc;
+    color: #182230;
+}
+
+.onboarding-container {
+    width: 100%;
+    max-width: 1080px;
+    margin: 0 auto;
+}
+
+/* ================================
+   BRAND AND PROGRESS
+================================ */
+
+.onboarding-header,
+.onboarding-brand,
+.section-heading,
+.channel-card-top,
+.onboarding-footer,
+.onboarding-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.onboarding-brand {
+    justify-content: flex-start;
+    gap: 11px;
+    font-size: 15px;
+    font-weight: 750;
+    letter-spacing: -0.2px;
+}
+
+.brand-mark {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    border-radius: 11px;
+    background: #315bea;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.step-label {
+    color: #667085;
+    font-size: 11px;
+    font-weight: 750;
+    letter-spacing: 0.8px;
+}
+
+.progress-track {
+    height: 5px;
+    margin-top: 24px;
+    overflow: hidden;
+    border-radius: 100px;
+    background: #e6e9f2;
+}
+
+.progress-fill {
+    width: 33.333%;
+    height: 100%;
+    border-radius: inherit;
+    background: #315bea;
+}
+
+/* ================================
+   PAGE INTRODUCTION
+================================ */
+
+.onboarding-intro {
+    max-width: 690px;
+    margin: 48px 0 38px;
+}
+
+.eyebrow {
+    color: #315bea;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+.onboarding-intro h1 {
+    max-width: 650px;
+    margin: 14px 0;
+    color: #182230;
+    font-size: clamp(30px, 4vw, 43px);
+    font-weight: 760;
+    line-height: 1.16;
+    letter-spacing: -1.5px;
+}
+
+.onboarding-intro p {
+    max-width: 620px;
+    margin: 0;
+    color: #667085;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+/* ================================
+   CHANNEL SECTION
+================================ */
+
+.channels-section {
+    margin-top: 36px;
+}
+
+.section-heading {
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.section-heading h2 {
+    margin: 0 0 6px;
+    font-size: 19px;
+    font-weight: 750;
+    letter-spacing: -0.4px;
+}
+
+.section-heading p {
+    margin: 0;
+    color: #667085;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.optional-label {
+    flex-shrink: 0;
+    padding: 7px 11px;
+    border: 1px solid #e1e5ed;
+    border-radius: 100px;
+    background: #fff;
+    color: #667085;
+    font-size: 11px;
+    font-weight: 650;
+}
+
+/* Three equal columns on desktop */
+.channels-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 18px;
+}
+
+/* Every card follows the same structure */
+.channel-card {
+    display: flex;
+    min-width: 0;
+    min-height: 225px;
+    flex-direction: column;
+    padding: 20px;
+    border: 1px solid #e6e9f0;
+    border-radius: 15px;
+    background: #fff;
+    box-shadow: 0 3px 12px rgb(16 24 40 / 3%);
+    transition:
+        transform 180ms ease,
+        border-color 180ms ease,
+        box-shadow 180ms ease;
+}
+
+.channel-card:hover {
+    transform: translateY(-2px);
+    border-color: #cbd5fa;
+    box-shadow: 0 9px 24px rgb(16 24 40 / 6%);
+}
+
+.channel-card-top {
+    min-height: 42px;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.channel-icon {
+    display: grid;
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    place-items: center;
+    border-radius: 12px;
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.instagram {
+    background: #fce7f3;
+    color: #c02678;
+}
+
+.tiktok {
+    background: #e9e9ee;
+    color: #17171c;
+}
+
+.whatsapp {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.facebook {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.x-twitter {
+    background: #eeeeef;
+    color: #18181b;
+}
+
+.channel-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #858da0;
+    font-size: 10px;
+    font-weight: 600;
+    text-align: right;
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #98a2b3;
+}
+
+.channel-status.is-connected {
+    color: #15803d;
+}
+
+.channel-status.is-connected .status-dot {
+    background: #22a06b;
+}
+
+.channel-card h3 {
+    margin: 0 0 8px;
+    color: #182230;
+    font-size: 15px;
+    font-weight: 750;
+}
+
+.channel-description {
+    flex: 1;
+    margin: 0 0 22px;
+    color: #667085;
+    font-size: 12px;
+    line-height: 1.75;
+}
+
+/* Card buttons align at the bottom */
+.channel-button {
+    display: flex;
+    width: 100%;
+    min-height: 40px;
+    align-items: center;
+    justify-content: center;
+    margin-top: auto;
+    padding: 9px 12px;
+    border: 1px solid #dfe4ee;
+    border-radius: 9px;
+    background: #fff;
+    color: #344054;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        background 160ms ease,
+        border-color 160ms ease,
+        color 160ms ease;
+}
+
+.channel-button:hover:not(:disabled) {
+    border-color: #315bea;
+    background: #f3f6ff;
+    color: #315bea;
+}
+
+.channel-button:disabled {
+    cursor: default;
+    opacity: 1;
+}
+
+.channel-button-connected {
+    border-color: #bbebce;
+    background: #effbf3;
+    color: #15803d;
+}
+
+/* ================================
+   INFORMATION NOTICE
+================================ */
+
+.onboarding-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-top: 24px;
+    padding: 17px;
+    border: 1px solid #e1e8fb;
+    border-radius: 12px;
+    background: #f0f4ff;
+}
+
+.notice-icon {
+    display: grid;
+    width: 21px;
+    height: 21px;
+    flex-shrink: 0;
+    place-items: center;
+    border-radius: 50%;
+    background: #dbe5ff;
+    color: #315bea;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.onboarding-notice p {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin: 0;
+    color: #465574;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.onboarding-notice strong {
+    color: #293b60;
+    font-size: 12px;
+}
+
+/* ================================
+   FOOTER ACTIONS
+================================ */
+
+.onboarding-footer {
+    gap: 24px;
+    margin-top: 28px;
+    padding-top: 22px;
+    border-top: 1px solid #e6e9f0;
+}
+
+.onboarding-footer>p {
+    margin: 0;
+    color: #667085;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.onboarding-actions {
+    flex-shrink: 0;
+    gap: 12px;
+}
+
+.skip-button,
+.primary-button {
+    display: inline-flex;
+    min-height: 43px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 0 17px;
+    border-radius: 9px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        background 160ms ease,
+        border-color 160ms ease,
+        transform 160ms ease;
+}
+
+.skip-button {
+    border: 1px solid #dfe4ec;
+    background: #fff;
+    color: #475467;
+}
+
+.skip-button:hover {
+    border-color: #b9c1d0;
+    background: #f9fafb;
+}
+
+.primary-button {
+    border: 1px solid #315bea;
+    background: #315bea;
+    color: #fff;
+    box-shadow: 0 3px 8px rgb(49 91 234 / 16%);
+}
+
+.primary-button:hover {
+    border-color: #2448c7;
+    background: #2448c7;
+}
+
+.skip-button:focus-visible,
+.primary-button:focus-visible,
+.channel-button:focus-visible {
+    outline: 3px solid #a9bbff;
+    outline-offset: 3px;
+}
+
+/* ================================
+   TABLET
+================================ */
+
+@media (max-width: 850px) {
+    .onboarding-page {
+        padding: 30px 22px 44px;
+    }
+
+    .channels-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+    }
+
+    .onboarding-footer {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .onboarding-actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}
+
+/* ================================
+   MOBILE
+================================ */
+
+@media (max-width: 520px) {
+    .onboarding-page {
+        padding: 22px 16px 32px;
+    }
+
+    .onboarding-intro {
+        margin: 36px 0 30px;
+    }
+
+    .onboarding-intro h1 {
+        font-size: 31px;
+        letter-spacing: -0.9px;
+    }
+
+    .channels-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .channel-card {
+        min-height: 205px;
+        padding: 18px;
+    }
+
+    .section-heading {
+        align-items: flex-start;
+    }
+
+    .onboarding-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .skip-button,
+    .primary-button {
+        width: 100%;
+    }
+
+    .onboarding-notice {
+        padding: 14px;
+    }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+
+    .channel-card,
+    .channel-button,
+    .skip-button,
+    .primary-button {
+        transition: none;
+    }
+
+    .channel-card:hover {
+        transform: none;
+    }
+}

@@ -1,0 +1,303 @@
+/* =========================================
+   SETTINGS PAGE
+   Shared styling for workspace configuration
+========================================= */
+
+.settings-page {
+    width: 100%;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 32px;
+    color: #172033;
+}
+
+/* Page header */
+
+.settings-page__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 36px;
+}
+
+.settings-page__eyebrow {
+    display: inline-block;
+    margin-bottom: 10px;
+    color: #6366f1;
+    font-size: 11px;
+    font-weight: 750;
+    letter-spacing: 1.4px;
+}
+
+.settings-page__header h1 {
+    margin: 0;
+    color: #172033;
+    font-size: 30px;
+    font-weight: 750;
+    letter-spacing: -0.8px;
+}
+
+.settings-page__header p {
+    margin: 10px 0 0;
+    color: #778197;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* Settings sections */
+
+.settings-section {
+    margin-bottom: 30px;
+}
+
+.settings-section__heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 13px;
+}
+
+.settings-section__heading h2 {
+    margin: 0;
+    color: #263249;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+}
+
+.settings-section__heading p {
+    margin: 5px 0 0;
+    color: #8992a5;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+/* Individual settings cards */
+
+.settings-card {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 22px;
+    border: 1px solid #e7eaf1;
+    border-radius: 12px;
+    background: #ffffff;
+    box-shadow: 0 2px 6px rgb(20 32 60 / 3%);
+    transition:
+        border-color 180ms ease,
+        box-shadow 180ms ease,
+        transform 180ms ease;
+}
+
+.settings-card:hover {
+    border-color: #d8dcf8;
+    box-shadow: 0 5px 16px rgb(20 32 60 / 5%);
+}
+
+.settings-card__icon {
+    display: flex;
+    flex: 0 0 46px;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border: 1px solid #e4e7ff;
+    border-radius: 11px;
+    background: #f1f2ff;
+    color: #5b5ee8;
+    font-size: 23px;
+}
+
+.settings-card__content {
+    flex: 1;
+    min-width: 0;
+}
+
+.settings-card__content h3 {
+    margin: 0;
+    color: #202b40;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.settings-card__content p {
+    max-width: 590px;
+    margin: 7px 0 0;
+    color: #7b8498;
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+/* Action buttons and links */
+
+.settings-card__button {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 38px;
+    padding: 0 15px;
+    border: 1px solid transparent;
+    border-radius: 7px;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 650;
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+        background 180ms ease,
+        border-color 180ms ease,
+        color 180ms ease;
+}
+
+.settings-card__button--primary {
+    border-color: #5b5ee8;
+    background: #5b5ee8;
+    color: #ffffff;
+}
+
+.settings-card__button--primary:hover {
+    border-color: #494bd4;
+    background: #494bd4;
+}
+
+.settings-card__button--secondary {
+    border-color: #e0e5ee;
+    background: #f8f9fc;
+    color: #697489;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.settings-card__button:focus-visible {
+    outline: 3px solid rgb(91 94 232 / 25%);
+    outline-offset: 3px;
+}
+
+/* Assignment status */
+
+.settings-card__meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 10px;
+    color: #5d667b;
+    font-size: 11px;
+    font-weight: 550;
+}
+
+.settings-status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #16a36a;
+}
+
+/* Future settings */
+
+.settings-card--muted {
+    background: #fafbfe;
+    box-shadow: none;
+}
+
+.settings-card--muted .settings-card__icon {
+    border-color: #e8ebf1;
+    background: #f0f2f6;
+    color: #7b8497;
+}
+
+.settings-card__coming-soon {
+    flex-shrink: 0;
+    padding: 6px 10px;
+    border: 1px solid #e8ebf1;
+    border-radius: 20px;
+    background: #f2f4f8;
+    color: #7b8497;
+    font-size: 10px;
+    font-weight: 650;
+    white-space: nowrap;
+}
+
+/* Tablet and mobile layouts */
+
+@media (max-width: 768px) {
+    .settings-page {
+        padding: 24px 20px;
+    }
+
+    .settings-page__header {
+        margin-bottom: 28px;
+    }
+
+    .settings-page__header h1 {
+        font-size: 26px;
+    }
+
+    .settings-section {
+        margin-bottom: 24px;
+    }
+
+    .settings-card {
+        gap: 14px;
+        padding: 18px;
+    }
+
+    .settings-card__icon {
+        flex-basis: 40px;
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media (max-width: 520px) {
+    .settings-page {
+        padding: 20px 14px;
+    }
+
+    .settings-page__header h1 {
+        font-size: 24px;
+    }
+
+    .settings-page__header p {
+        font-size: 13px;
+    }
+
+    .settings-card {
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 16px;
+    }
+
+    .settings-card__icon {
+        flex-basis: 38px;
+        width: 38px;
+        height: 38px;
+    }
+
+    .settings-card__content {
+        flex-basis: calc(100% - 54px);
+    }
+
+    .settings-card__content p {
+        font-size: 12px;
+    }
+
+    .settings-card__button {
+        width: 100%;
+        min-height: 40px;
+        margin-top: 2px;
+    }
+
+    .settings-card__coming-soon {
+        margin-left: 50px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .settings-card,
+    .settings-card__button {
+        transition: none;
+    }
+}

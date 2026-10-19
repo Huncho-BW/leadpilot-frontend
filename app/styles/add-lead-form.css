@@ -1,0 +1,330 @@
+/* =========================================
+   ADD LEAD FORM
+========================================= */
+
+.add-lead {
+    width: 100%;
+    min-width: 0;
+    color: #172033;
+    font-family: inherit;
+}
+
+.add-lead__header {
+    margin-bottom: 22px;
+}
+
+.add-lead__title {
+    margin: 0;
+    color: #1e293b;
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -0.4px;
+    line-height: 1.4;
+}
+
+.add-lead__description {
+    margin: 6px 0 0;
+    color: #8490a3;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+/* =========================================
+   FORM LAYOUT
+========================================= */
+
+.add-lead__form {
+    display: flex;
+    flex-direction: column;
+    gap: 21px;
+    min-width: 0;
+}
+
+.add-lead__fieldset {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+    min-width: 0;
+    margin: 0;
+    padding: 19px;
+    border: 1px solid #e8edf4;
+    border-radius: 10px;
+    background: #ffffff;
+}
+
+.add-lead__legend {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 8px;
+    color: #26334a;
+    font-size: 13px;
+    font-weight: 650;
+}
+
+.add-lead__legend-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 27px;
+    height: 27px;
+    border: 1px solid #e0e7ff;
+    border-radius: 7px;
+    background: #eef2ff;
+    color: #4f46e5;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+/* =========================================
+   INPUT GRID
+========================================= */
+
+.add-lead__fields-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 20px;
+    min-width: 0;
+}
+
+.add-lead__field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+}
+
+.add-lead__field--full {
+    grid-column: 1 / -1;
+}
+
+.add-lead__label {
+    color: #46536a;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.add-lead__required {
+    color: #e05252;
+}
+
+.add-lead__optional {
+    color: #94a0b2;
+    font-size: 11px;
+    font-weight: 400;
+}
+
+/* =========================================
+   INPUTS, SELECTS AND TEXTAREA
+========================================= */
+
+.add-lead__input {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    min-height: 42px;
+    padding: 10px 12px;
+    border: 1px solid #dfe5ee;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #243047;
+    font-family: inherit;
+    font-size: 12px;
+    line-height: 1.5;
+    transition:
+        border-color 180ms ease,
+        box-shadow 180ms ease,
+        background-color 180ms ease;
+}
+
+.add-lead__input::placeholder {
+    color: #a0aabb;
+}
+
+.add-lead__input:hover {
+    border-color: #cbd5e1;
+}
+
+.add-lead__input:focus {
+    border-color: #818cf8;
+    outline: none;
+    box-shadow: 0 0 0 3px rgb(99 102 241 / 10%);
+}
+
+.add-lead__input:focus-visible {
+    outline: 2px solid #818cf8;
+    outline-offset: 2px;
+}
+
+.add-lead__select {
+    padding-right: 34px;
+    cursor: pointer;
+}
+
+.add-lead__textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+.add-lead__helper {
+    margin: 0;
+    color: #8a96a8;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+/* =========================================
+   FOOTER AND ACTION BUTTONS
+========================================= */
+
+.add-lead__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding-top: 3px;
+}
+
+.add-lead__required-note {
+    margin: 0;
+    color: #8490a3;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.add-lead__actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.add-lead__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    padding: 0 17px;
+    border: 1px solid transparent;
+    border-radius: 7px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+        background-color 180ms ease,
+        border-color 180ms ease,
+        color 180ms ease,
+        box-shadow 180ms ease,
+        transform 180ms ease;
+}
+
+.add-lead__button:active {
+    transform: translateY(1px);
+}
+
+.add-lead__button:focus-visible {
+    outline: 3px solid rgb(99 102 241 / 25%);
+    outline-offset: 2px;
+}
+
+.add-lead__button--cancel {
+    border-color: #dfe5ee;
+    background: #ffffff;
+    color: #526076;
+}
+
+.add-lead__button--cancel:hover {
+    border-color: #cbd5e1;
+    background: #f8fafc;
+    color: #334155;
+}
+
+.add-lead__button--submit {
+    border-color: #4f46e5;
+    background: #4f46e5;
+    color: #ffffff;
+}
+
+.add-lead__button--submit:hover {
+    border-color: #4338ca;
+    background: #4338ca;
+    box-shadow: 0 4px 10px rgb(79 70 229 / 16%);
+}
+
+/* =========================================
+   RESPONSIVE FORM
+========================================= */
+
+@media (max-width: 700px) {
+    .add-lead__form {
+        gap: 17px;
+    }
+
+    .add-lead__fieldset {
+        gap: 15px;
+        padding: 15px;
+    }
+
+    .add-lead__fields-grid {
+        gap: 15px;
+    }
+
+    .add-lead__header {
+        margin-bottom: 17px;
+    }
+}
+
+@media (max-width: 520px) {
+    .add-lead__title {
+        font-size: 17px;
+    }
+
+    .add-lead__fields-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .add-lead__field--full {
+        grid-column: auto;
+    }
+
+    .add-lead__fieldset {
+        padding: 13px;
+    }
+
+    .add-lead__legend {
+        gap: 8px;
+        font-size: 12px;
+    }
+
+    .add-lead__input {
+        min-height: 42px;
+    }
+
+    .add-lead__footer {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 13px;
+    }
+
+    .add-lead__actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .add-lead__button {
+        width: 100%;
+        padding: 0 10px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .add-lead *,
+    .add-lead *::before,
+    .add-lead *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}

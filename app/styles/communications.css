@@ -1,0 +1,474 @@
+/* =========================================
+   Communication & Meetings
+   ========================================= */
+
+.communications {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    min-width: 0;
+    padding: 24px;
+    color: #172033;
+}
+
+/* Page header */
+
+.communications__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.communications__header-content {
+    max-width: 680px;
+}
+
+.communications__eyebrow {
+    display: inline-block;
+    margin-bottom: 8px;
+    color: #6366f1;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.1px;
+}
+
+.communications__title {
+    margin: 0;
+    color: #111827;
+    font-size: 27px;
+    font-weight: 700;
+    letter-spacing: -0.8px;
+}
+
+.communications__description {
+    margin: 9px 0 0;
+    color: #737d8e;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.communications__primary-button,
+.communications__secondary-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 0 15px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+        background-color 160ms ease,
+        border-color 160ms ease,
+        box-shadow 160ms ease;
+}
+
+.communications__primary-button {
+    background: #4f46e5;
+    color: #fff;
+    box-shadow: 0 2px 4px rgb(79 70 229 / 12%);
+}
+
+.communications__primary-button:hover {
+    background: #4338ca;
+}
+
+.communications__primary-button:focus-visible,
+.communications__secondary-button:focus-visible {
+    outline: 3px solid rgb(99 102 241 / 25%);
+    outline-offset: 2px;
+}
+
+/* Section headings */
+
+.communications__section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.communications__section-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.communications__section-heading h2 {
+    margin: 0;
+    color: #202a3b;
+    font-size: 15px;
+    font-weight: 650;
+    letter-spacing: -0.2px;
+}
+
+.communications__section-heading p {
+    margin: 6px 0 0;
+    color: #818a9a;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.communications__panel {
+    display: flex;
+    flex-direction: column;
+    gap: 19px;
+    min-width: 0;
+    padding: 21px;
+    border: 1px solid #e8ebf1;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 2px 5px rgb(15 23 42 / 2%);
+}
+
+.communications__section-tag {
+    padding: 6px 9px;
+    border-radius: 6px;
+    background: #f1f3ff;
+    color: #5145cd;
+    font-size: 10px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* Overview metric cards */
+
+.communications__metrics {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 15px;
+    margin: 0;
+}
+
+.communications__metric {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 0;
+    min-height: 153px;
+    padding: 17px;
+    border: 1px solid #e9edf3;
+    border-radius: 10px;
+    background: #fff;
+}
+
+.communications__metric-icon {
+    display: grid;
+    width: 35px;
+    height: 35px;
+    margin-bottom: 15px;
+    place-items: center;
+    border-radius: 9px;
+}
+
+.communications__metric-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+.communications__metric--total .communications__metric-icon {
+    background: #eef2ff;
+    color: #4f46e5;
+}
+
+.communications__metric--upcoming .communications__metric-icon {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.communications__metric--completed .communications__metric-icon {
+    background: #ecfdf5;
+    color: #059669;
+}
+
+.communications__metric--followup .communications__metric-icon {
+    background: #fff7ed;
+    color: #c2410c;
+}
+
+.communications__metric dt {
+    color: #697386;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+.communications__metric dd {
+    margin: 7px 0 0;
+    color: #1b2536;
+    font-size: 25px;
+    font-weight: 700;
+    letter-spacing: -0.7px;
+}
+
+.communications__metric>p {
+    margin: 7px 0 0;
+    color: #929aaa;
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+/* Search and filters */
+
+.communications__filters {
+    display: grid;
+    grid-template-columns: minmax(190px, 1.5fr) minmax(150px, 1fr) minmax(140px, 0.9fr) auto;
+    align-items: end;
+    gap: 14px;
+}
+
+.communications__field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+}
+
+.communications__field label {
+    color: #414b5d;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.communications__field input,
+.communications__field select {
+    width: 100%;
+    min-width: 0;
+    height: 41px;
+    padding: 0 11px;
+    border: 1px solid #dfe4ec;
+    border-radius: 7px;
+    background: #fff;
+    color: #364152;
+    font: inherit;
+    font-size: 12px;
+    outline: none;
+    transition:
+        border-color 160ms ease,
+        box-shadow 160ms ease;
+}
+
+.communications__field input::placeholder {
+    color: #a0a8b6;
+}
+
+.communications__field input:focus,
+.communications__field select:focus {
+    border-color: #818cf8;
+    box-shadow: 0 0 0 3px rgb(99 102 241 / 10%);
+}
+
+.communications__secondary-button {
+    min-height: 41px;
+    border-color: #dfe4ec;
+    background: #fff;
+    color: #354052;
+}
+
+.communications__secondary-button:hover {
+    border-color: #c7d2fe;
+    background: #f8faff;
+}
+
+/* Responsive data tables */
+
+.communications__table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.communications__table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.communications__table thead {
+    background: #f8f9fc;
+}
+
+.communications__table th {
+    padding: 13px 14px;
+    border-bottom: 1px solid #e9edf3;
+    color: #778195;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.communications__table td {
+    padding: 14px;
+    border-bottom: 1px solid #edf0f5;
+    color: #475164;
+    font-size: 12px;
+}
+
+.communications__table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.communications__table tbody tr:hover:not(:has(.communications__empty-cell)) {
+    background: #fafbff;
+}
+
+/* Empty table states */
+
+.communications__table .communications__empty-cell {
+    height: 155px;
+    padding: 25px 15px;
+    text-align: center;
+    white-space: normal;
+}
+
+.communications__empty-cell>* {
+    display: block;
+}
+
+.communications__empty-icon {
+    display: grid;
+    width: 39px;
+    height: 39px;
+    margin: 0 auto 12px;
+    place-items: center;
+    border-radius: 11px;
+    background: #f1f3ff;
+    color: #7775d9;
+}
+
+.communications__empty-icon svg {
+    width: 21px;
+    height: 21px;
+}
+
+.communications__empty-cell strong {
+    color: #414b5d;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.communications__empty-cell>span:last-child {
+    margin-top: 6px;
+    color: #929aaa;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+/* Meeting details */
+
+.communications__meeting-details {
+    gap: 20px;
+}
+
+.communications__details-placeholder {
+    padding: 6px 9px;
+    border: 1px solid #e7eaf0;
+    border-radius: 6px;
+    color: #818a9a;
+    font-size: 10px;
+    white-space: nowrap;
+}
+
+.communications__details-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin: 0;
+}
+
+.communications__detail-item {
+    min-width: 0;
+    min-height: 83px;
+    padding: 15px;
+    border: 1px solid #edf0f5;
+    border-radius: 9px;
+    background: #fafbfe;
+}
+
+.communications__detail-item dt {
+    color: #737d8e;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.communications__detail-item dd {
+    margin: 10px 0 0;
+    color: #354052;
+    font-size: 12px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+/* Responsive layout */
+
+@media (max-width: 1100px) {
+    .communications__metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .communications__filters {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 760px) {
+    .communications {
+        gap: 19px;
+        padding: 18px;
+    }
+
+    .communications__header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .communications__primary-button {
+        align-self: flex-start;
+    }
+
+    .communications__panel {
+        padding: 17px;
+    }
+
+    .communications__table {
+        min-width: 720px;
+    }
+
+    .communications__section-heading {
+        gap: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .communications {
+        padding: 14px;
+    }
+
+    .communications__title {
+        font-size: 23px;
+    }
+
+    .communications__metrics,
+    .communications__filters,
+    .communications__details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .communications__metric {
+        min-height: 135px;
+    }
+
+    .communications__section-heading {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .communications__details-placeholder {
+        align-self: flex-start;
+    }
+}

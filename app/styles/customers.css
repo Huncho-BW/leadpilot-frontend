@@ -1,0 +1,544 @@
+/* =========================================
+   Customer Management
+   ========================================= */
+
+.customers {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    min-width: 0;
+    padding: 24px;
+    color: #172033;
+}
+
+/* Page header */
+
+.customers__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.customers__header-content {
+    max-width: 680px;
+}
+
+.customers__eyebrow {
+    display: inline-block;
+    margin-bottom: 8px;
+    color: #6366f1;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.1px;
+}
+
+.customers__title {
+    margin: 0;
+    color: #111827;
+    font-size: 27px;
+    font-weight: 700;
+    letter-spacing: -0.8px;
+}
+
+.customers__description {
+    margin: 9px 0 0;
+    color: #737d8e;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.customers__primary-button,
+.customers__secondary-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 0 15px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+        background-color 160ms ease,
+        border-color 160ms ease,
+        box-shadow 160ms ease;
+}
+
+.customers__primary-button {
+    background: #4f46e5;
+    color: #fff;
+    box-shadow: 0 2px 4px rgb(79 70 229 / 12%);
+}
+
+.customers__primary-button:hover {
+    background: #4338ca;
+}
+
+.customers__primary-button:focus-visible,
+.customers__secondary-button:focus-visible {
+    outline: 3px solid rgb(99 102 241 / 25%);
+    outline-offset: 2px;
+}
+
+/* Shared section styles */
+
+.customers__section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    min-width: 0;
+}
+
+.customers__section-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.customers__section-heading h2 {
+    margin: 0;
+    color: #202a3b;
+    font-size: 15px;
+    font-weight: 650;
+    letter-spacing: -0.2px;
+}
+
+.customers__section-heading p {
+    margin: 6px 0 0;
+    color: #818a9a;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.customers__panel {
+    display: flex;
+    flex-direction: column;
+    gap: 19px;
+    min-width: 0;
+    padding: 21px;
+    border: 1px solid #e8ebf1;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 2px 5px rgb(15 23 42 / 2%);
+}
+
+/* Overview cards */
+
+.customers__metrics {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 15px;
+    margin: 0;
+}
+
+.customers__metric {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 0;
+    min-height: 153px;
+    padding: 17px;
+    border: 1px solid #e9edf3;
+    border-radius: 10px;
+    background: #fff;
+}
+
+.customers__metric-icon {
+    display: grid;
+    width: 35px;
+    height: 35px;
+    margin-bottom: 15px;
+    place-items: center;
+    border-radius: 9px;
+}
+
+.customers__metric-icon svg {
+    width: 21px;
+    height: 21px;
+}
+
+.customers__metric--total .customers__metric-icon {
+    background: #eef2ff;
+    color: #4f46e5;
+}
+
+.customers__metric--new .customers__metric-icon {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.customers__metric--active .customers__metric-icon {
+    background: #ecfdf5;
+    color: #059669;
+}
+
+.customers__metric--inactive .customers__metric-icon {
+    background: #fff7ed;
+    color: #c2410c;
+}
+
+.customers__metric dt {
+    color: #697386;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+.customers__metric dd {
+    margin: 7px 0 0;
+    color: #1b2536;
+    font-size: 25px;
+    font-weight: 700;
+    letter-spacing: -0.7px;
+}
+
+.customers__metric>p {
+    margin: 7px 0 0;
+    color: #929aaa;
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+/* Search and filters */
+
+.customers__filters-panel {
+    gap: 20px;
+}
+
+.customers__filters {
+    display: grid;
+    grid-template-columns: minmax(190px, 1.5fr) minmax(150px, 1fr) minmax(150px, 1fr) auto;
+    align-items: end;
+    gap: 14px;
+}
+
+.customers__field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+}
+
+.customers__field label {
+    color: #414b5d;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.customers__field input,
+.customers__field select {
+    width: 100%;
+    min-width: 0;
+    height: 41px;
+    padding: 0 11px;
+    border: 1px solid #dfe4ec;
+    border-radius: 7px;
+    background: #fff;
+    color: #364152;
+    font: inherit;
+    font-size: 12px;
+    outline: none;
+    transition:
+        border-color 160ms ease,
+        box-shadow 160ms ease;
+}
+
+.customers__field input::placeholder {
+    color: #a0a8b6;
+}
+
+.customers__field input:focus,
+.customers__field select:focus {
+    border-color: #818cf8;
+    box-shadow: 0 0 0 3px rgb(99 102 241 / 10%);
+}
+
+.customers__secondary-button {
+    min-height: 41px;
+    border-color: #dfe4ec;
+    background: #fff;
+    color: #354052;
+}
+
+.customers__secondary-button:hover {
+    border-color: #c7d2fe;
+    background: #f8faff;
+}
+
+/* Customer table */
+
+.customers__table-panel {
+    gap: 18px;
+}
+
+.customers__count-label,
+.customers__selection-label {
+    padding: 6px 9px;
+    border: 1px solid #e7eaf0;
+    border-radius: 6px;
+    color: #7a8495;
+    font-size: 10px;
+    white-space: nowrap;
+}
+
+.customers__table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.customers__table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.customers__table thead {
+    background: #f8f9fc;
+}
+
+.customers__table th {
+    padding: 13px 14px;
+    border-bottom: 1px solid #e9edf3;
+    color: #778195;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.customers__table td {
+    padding: 14px;
+    border-bottom: 1px solid #edf0f5;
+    color: #475164;
+    font-size: 12px;
+}
+
+.customers__table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.customers__table tbody tr:hover:not(:has(.customers__empty-cell)) {
+    background: #fafbff;
+}
+
+/* Empty table state */
+
+.customers__table .customers__empty-cell {
+    height: 155px;
+    padding: 25px 15px;
+    text-align: center;
+    white-space: normal;
+}
+
+.customers__empty-cell>* {
+    display: block;
+}
+
+.customers__empty-icon {
+    display: grid;
+    width: 42px;
+    height: 42px;
+    margin: 0 auto 12px;
+    place-items: center;
+    border-radius: 12px;
+    background: #f1f3ff;
+    color: #7775d9;
+}
+
+.customers__empty-icon svg {
+    width: 22px;
+    height: 22px;
+}
+
+.customers__empty-cell strong {
+    color: #414b5d;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.customers__empty-cell>span:last-child {
+    margin-top: 6px;
+    color: #929aaa;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+/* Customer details */
+
+.customers__details-panel {
+    gap: 20px;
+}
+
+.customers__details-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin: 0;
+}
+
+.customers__detail-item {
+    min-width: 0;
+    min-height: 79px;
+    padding: 15px;
+    border: 1px solid #edf0f5;
+    border-radius: 9px;
+    background: #fafbfe;
+}
+
+.customers__detail-item dt {
+    color: #737d8e;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.customers__detail-item dd {
+    margin: 10px 0 0;
+    color: #354052;
+    font-size: 12px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+/* Related deals and activities */
+
+.customers__related-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.customers__related-card {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.customers__related-icon {
+    display: grid;
+    flex: 0 0 42px;
+    width: 42px;
+    height: 42px;
+    place-items: center;
+    border-radius: 10px;
+}
+
+.customers__related-icon svg {
+    width: 21px;
+    height: 21px;
+}
+
+.customers__related-icon--deals {
+    background: #eef2ff;
+    color: #4f46e5;
+}
+
+.customers__related-icon--activities {
+    background: #ecfdf5;
+    color: #059669;
+}
+
+.customers__related-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.customers__related-content h3 {
+    margin: 1px 0 0;
+    color: #202a3b;
+    font-size: 14px;
+    font-weight: 650;
+}
+
+.customers__related-content>p {
+    margin: 7px 0 13px;
+    color: #818a9a;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.customers__related-empty {
+    display: inline-block;
+    padding: 6px 9px;
+    border-radius: 6px;
+    background: #f7f8fb;
+    color: #8a94a5;
+    font-size: 10px;
+}
+
+/* Responsive layout */
+
+@media (max-width: 1100px) {
+    .customers__metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .customers__filters {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .customers__details-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 760px) {
+    .customers {
+        gap: 19px;
+        padding: 18px;
+    }
+
+    .customers__header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .customers__primary-button {
+        align-self: flex-start;
+    }
+
+    .customers__panel {
+        padding: 17px;
+    }
+
+    .customers__table {
+        min-width: 850px;
+    }
+
+    .customers__related-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .customers {
+        padding: 14px;
+    }
+
+    .customers__title {
+        font-size: 23px;
+    }
+
+    .customers__metrics,
+    .customers__filters,
+    .customers__details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .customers__metric {
+        min-height: 135px;
+    }
+
+    .customers__section-heading {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .customers__related-card {
+        padding: 15px;
+    }
+}

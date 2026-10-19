@@ -1,26 +1,176 @@
-@import "tailwindcss";
+ @import "tailwindcss";
+
+/*
+  CRM DESIGN SYSTEM
+  Central source of truth for the application's visual identity.
+  Page-specific styles should reuse these variables instead of
+  defining their own competing colours and design values.
+*/
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Brand colours */
+  --color-primary: #4263eb;
+  --color-primary-hover: #3451d1;
+  --color-primary-light: #edf1ff;
+
+  --color-secondary: #17243b;
+  --color-accent: #7487ff;
+
+  /* Application surfaces */
+  --background: #f6f8fc;
+  --surface: #ffffff;
+  --surface-secondary: #f8faff;
+  --sidebar-background: #17243b;
+  --sidebar-hover: #25334c;
+  --sidebar-active: #30415f;
+
+  /* Text hierarchy */
+  --foreground: #17243b;
+  --text-secondary: #536179;
+  --text-muted: #8994a8;
+  --text-on-dark: #f8fafc;
+
+  /* Borders and separators */
+  --border: #e3e8f0;
+  --border-strong: #cbd4e2;
+
+  /* Semantic colours */
+  --color-success: #16845b;
+  --color-success-light: #e8f7ef;
+
+  --color-warning: #a96a12;
+  --color-warning-light: #fff4df;
+
+  --color-danger: #c43d4b;
+  --color-danger-light: #fff0f1;
+
+  --color-info: #2764c5;
+  --color-info-light: #eaf2ff;
+
+  /* Typography */
+  --font-sans: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  --font-mono: var(--font-geist-mono), monospace;
+
+  /* Spacing scale */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+
+  /* Borders and corners */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 0.875rem;
+  --radius-xl: 1.125rem;
+
+  /* Shadows: subtle elevation, not decoration */
+  --shadow-sm: 0 1px 2px rgb(23 36 59 / 5%);
+  --shadow-md: 0 4px 12px rgb(23 36 59 / 6%);
+  --shadow-lg: 0 12px 32px rgb(23 36 59 / 9%);
+
+  /* Shared layout dimensions */
+  --sidebar-width: 16rem;
+  --content-max-width: 1600px;
+
+  /* Interaction */
+  --transition-fast: 150ms ease;
+  --transition-normal: 200ms ease;
+
+  /* Focus accessibility */
+  --focus-ring: 0 0 0 3px rgb(66 99 235 / 20%);
 }
 
+/*
+  Tailwind CSS v4 theme mappings.
+  These allow our design tokens to be used by Tailwind utilities.
+*/
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  --color-primary: var(--color-primary);
+  --color-secondary: var(--color-secondary);
+
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/*
+  Consistent box sizing prevents padding and borders from
+  unexpectedly increasing an element's declared dimensions.
+*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Smooth navigation and anchor scrolling without forcing animation. */
+html {
+  scroll-behavior: smooth;
+}
+
+/*
+  Global application defaults.
+  The CRM uses a light workspace background; individual components
+  can use --surface for white cards, forms, and tables.
+*/
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Keep form controls consistent with the application's typography. */
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Buttons should communicate that they are interactive. */
+button {
+  cursor: pointer;
+}
+
+/* Disabled controls must not appear interactive. */
+button:disabled {
+  cursor: not-allowed;
+}
+
+/* Links inherit their surrounding typography unless styled explicitly. */
+a {
+  color: inherit;
+}
+
+/* Give keyboard users a visible focus indicator. */
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+/* Respect the user's reduced-motion preference. */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
