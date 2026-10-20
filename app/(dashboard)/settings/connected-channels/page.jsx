@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import "../../../styles/connected-channels.css";
 
@@ -63,6 +63,41 @@ export default function ConnectedChannelsPage() {
   const [channels, setChannels] = useState(initialChannels);
   const [selectedChannel, setSelectedChannel] = useState(null);
   const [notice, setNotice] = useState("");
+  const [instagramResult, setInstagramResult] = useState(null);
+
+  // Read the result returned by the Instagram OAuth callback.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const result = params.get("instagram");
+
+    const messages = {
+      success:
+        "Instagram authorization succeeded. The account has not yet been saved to this workspace.",
+      denied:
+        "Instagram authorization was cancelled or declined. You can try again whenever you're ready.",
+      failed:
+        "Instagram authorization could not be completed. Please try again.",
+    };
+
+    if (!result || !Object.hasOwn(messages, result)) {
+      return;
+    }
+
+    setInstagramResult({
+      status: result,
+      message: messages[result],
+    });
+
+    // Remove the OAuth result from the address bar without reloading.
+    params.delete("instagram");
+
+    const query = params.toString();
+    const cleanUrl = `${window.location.pathname}${
+      query ? `?${query}` : ""
+    }${window.location.hash}`;
+
+    window.history.replaceState(window.history.state, "", cleanUrl);
+  }, []);
 
   // Open a setup dialog instead of pretending OAuth has completed.
   function handleConnect(channel) {
@@ -75,8 +110,7 @@ export default function ConnectedChannelsPage() {
     setNotice("");
   }
 
-  // This confirms that the user understands this is a frontend prototype.
-  // It deliberately does not mark the social account as connected.
+  // Start real Instagram authorization; other channels remain prototype flows.
   function handleDemoContinue() {
     if (selectedChannel?.id === "instagram") {
       window.location.href =
@@ -124,6 +158,17 @@ export default function ConnectedChannelsPage() {
           </div>
         </div>
       </header>
+
+      {/* Show Instagram authorization feedback above the setup information. */}
+      {instagramResult && (
+        <div
+          className={`connected-channels__oauth-result connected-channels__oauth-result--${instagramResult.status}`}
+          role="status"
+          aria-live="polite"
+        >
+          {instagramResult.message}
+        </div>
+      )}
 
       <section
         className="connected-channels__notice"
