@@ -78,6 +78,12 @@ export default function ConnectedChannelsPage() {
   // This confirms that the user understands this is a frontend prototype.
   // It deliberately does not mark the social account as connected.
   function handleDemoContinue() {
+    if (selectedChannel?.id === "instagram") {
+      window.location.href =
+        "https://leadpilot-backend-mbx0.onrender.com/api/v1/auth/instagram";
+      return;
+    }
+
     setNotice(
       `The ${selectedChannel.name} connection flow is not configured yet. Real account authorization will be added with the platform API integration.`,
     );

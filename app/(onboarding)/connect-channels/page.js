@@ -45,6 +45,13 @@ export default function ConnectChannelsPage() {
 
   // Simulate connecting a channel so we can test the UI.
   function handleConnect(channelName) {
+    if (channelName === "Instagram") {
+      window.location.href =
+        "https://leadpilot-backend-mbx0.onrender.com/api/v1/auth/instagram";
+      return;
+    }
+
+    // Keep demo behavior for the other channels.
     setConnectedChannels((current) =>
       current.includes(channelName) ? current : [...current, channelName],
     );
