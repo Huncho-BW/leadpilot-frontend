@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import "../../styles/onboarding.css";
 
@@ -42,12 +42,48 @@ export default function ConnectChannelsPage() {
 
   // Demo-only state: this does not authorize a real social account.
   const [connectedChannels, setConnectedChannels] = useState([]);
+  const [instagramResult, setInstagramResult] = useState(null);
 
-  // Simulate connecting a channel so we can test the UI.
+  // Read the Instagram OAuth result when the user returns.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const result = params.get("instagram");
+
+    const messages = {
+      success:
+        "Instagram authorization succeeded. The account has not yet been saved to this workspace.",
+      denied:
+        "Instagram authorization was cancelled or declined. You can try again whenever you're ready.",
+      failed:
+        "Instagram authorization could not be completed. Please try again.",
+    };
+
+    if (!result || !Object.hasOwn(messages, result)) {
+      return;
+    }
+
+    setInstagramResult({
+      status: result,
+      message: messages[result],
+    });
+
+    // Remove only the Instagram result from the address bar.
+    params.delete("instagram");
+
+    const query = params.toString();
+    const cleanUrl = `${window.location.pathname}${
+      query ? `?${query}` : ""
+    }${window.location.hash}`;
+
+    window.history.replaceState(window.history.state, "", cleanUrl);
+  }, []);
+
   function handleConnect(channelName) {
     if (channelName === "Instagram") {
-      window.location.href =
-        "https://leadpilot-backend-mbx0.onrender.com/api/v1/auth/instagram";
+      const returnTo = encodeURIComponent("/connect-channels");
+
+      window.location.href = `https://leadpilot-backend-mbx0.onrender.com/api/v1/auth/instagram?returnTo=${returnTo}`;
+
       return;
     }
 
@@ -57,7 +93,6 @@ export default function ConnectChannelsPage() {
     );
   }
 
-  // Continue and Skip both lead to the existing dashboard.
   function goToDashboard() {
     router.push("/dashboard");
   }
@@ -95,6 +130,19 @@ export default function ConnectChannelsPage() {
             step and connect accounts later in Settings.
           </p>
         </section>
+
+        {instagramResult && (
+          <aside className="onboarding-notice" role="status" aria-live="polite">
+            <span className="notice-icon" aria-hidden="true">
+              i
+            </span>
+
+            <p>
+              <strong>Instagram connection</strong>
+              <span>{instagramResult.message}</span>
+            </p>
+          </aside>
+        )}
 
         <section className="channels-section">
           <div className="section-heading">

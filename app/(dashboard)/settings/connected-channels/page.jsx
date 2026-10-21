@@ -110,11 +110,14 @@ export default function ConnectedChannelsPage() {
     setNotice("");
   }
 
-  // Start real Instagram authorization; other channels remain prototype flows.
+  // Start real Instagram authorization; other channels
+
   function handleDemoContinue() {
     if (selectedChannel?.id === "instagram") {
-      window.location.href =
-        "https://leadpilot-backend-mbx0.onrender.com/api/v1/auth/instagram";
+      const returnTo = encodeURIComponent("/settings/connected-channels");
+
+      window.location.href = `https://leadpilot-backend-mbx0.onrender.com/api/v1/auth/instagram?returnTo=${returnTo}`;
+
       return;
     }
 
