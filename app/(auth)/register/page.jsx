@@ -11,35 +11,37 @@ export default function RegisterPage() {
   const router = useRouter();
 
 
-  const registrationMutation = useMutation({
-    mutationFn: async (registrationData) => {
-      const response = await api.post("/register", registrationData);
-      return response.data;
-    },
+ 
+const registrationMutation = useMutation({
+  mutationFn: async (registrationData) => {
+    const response = await api.post("/register", registrationData);
+    return response.data;
+  },
 
-    onSuccess: (_data, registrationData) => {
+  onSuccess: (_data, registrationData) => {
+    const email = registrationData.email.trim().toLowerCase();
+
+    router.push(
+      `/verify-email?email=${encodeURIComponent(email)}`
+    );
+  },
+
+  onError: (error, registrationData) => {
+    const message = error?.response?.data?.message || "";
+
+    if (
+      error?.response?.status === 409 &&
+      message.toLowerCase().includes("already pending")
+    ) {
       const email = registrationData.email.trim().toLowerCase();
 
       router.push(
         `/verify-email?email=${encodeURIComponent(email)}`
       );
-    },
+    }
+  },
+});
 
-    onError: (error, registrationData) => {
-      const message = error?.response?.data?.message || "";
-
-      if (
-        error?.response?.status === 409 &&
-        message.toLowerCase().includes("registration is already pending")
-      ) {
-        const email = registrationData.email.trim().toLowerCase();
-
-        router.push(
-          `/verify-email?email=${encodeURIComponent(email)}`
-        );
-      }
-    },
-  });
 
 
   function handleSubmit(event) {
