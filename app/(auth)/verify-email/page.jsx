@@ -20,8 +20,17 @@ function VerifyEmailContent() {
   const [successMessage, setSuccessMessage] = useState("");
 
   const inputRefs = useRef([]);
+  const lastAttemptedCode = useRef(null);
 
-  // Count down the verification code's 60-second validity period.
+  function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+
+    return `${String(minutes).padStart(2, "0")}:${String(
+      remainingSeconds
+    ).padStart(2, "0")}`;
+  }
+
   useEffect(() => {
     if (secondsLeft <= 0) return;
 
@@ -32,7 +41,6 @@ function VerifyEmailContent() {
     return () => clearTimeout(timer);
   }, [secondsLeft]);
 
-  // Count down the backend-enforced resend cooldown when one is returned.
   useEffect(() => {
     if (cooldownSeconds <= 0) return;
 
@@ -43,14 +51,107 @@ function VerifyEmailContent() {
     return () => clearTimeout(timer);
   }, [cooldownSeconds]);
 
-  function formatTime(seconds) {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
+  const verificationMutation = useMutation({
+    mutationFn: async (code) => {
+      const response = await api.post("/verify-email", {
+        email,
+        code,
+      });
 
-    return `${String(minutes).padStart(2, "0")}:${String(
-      remainingSeconds
-    ).padStart(2, "0")}`;
-  }
+      return response.data;
+    },
+
+    onSuccess: () => {
+      router.replace("/connect-channels");
+    },
+
+    onError: (error) => {
+      setErrorMessage(
+        error.response?.data?.message ||
+          "Verification failed. Please check your code and try again."
+      );
+    },
+  });
+
+  const resendMutation = useMutation({
+    mutationFn: async () => {
+      const response = await api.post("/resend-code", { email });
+      return response.data;
+    },
+
+    onSuccess: (data) => {
+      setDigits(["", "", "", "", "", ""]);
+      lastAttemptedCode.current = null;
+
+      setSecondsLeft(60);
+      setErrorMessage("");
+      setSuccessMessage("A new verification code has been sent.");
+
+      const cooldownEndsAt =
+        data?.data?.cooldownEndsAt || data?.cooldownEndsAt;
+
+      if (cooldownEndsAt) {
+        const remaining = Math.max(
+          0,
+          Math.ceil(
+            (new Date(cooldownEndsAt).getTime() - Date.now()) / 1000
+          )
+        );
+
+        setCooldownSeconds(remaining);
+      }
+
+      inputRefs.current[0]?.focus();
+    },
+
+    onError: (error) => {
+      const responseData = error.response?.data;
+
+      setErrorMessage(
+        responseData?.message ||
+          "Could not resend your verification code. Please try again."
+      );
+
+      const cooldownEndsAt =
+        responseData?.data?.cooldownEndsAt ||
+        responseData?.cooldownEndsAt;
+
+      if (cooldownEndsAt) {
+        const remaining = Math.max(
+          0,
+          Math.ceil(
+            (new Date(cooldownEndsAt).getTime() - Date.now()) / 1000
+          )
+        );
+
+        setCooldownSeconds(remaining);
+      }
+    },
+  });
+
+  const code = digits.join("");
+  const verifyEmail = verificationMutation.mutate;
+  const isVerifying = verificationMutation.isPending;
+  const isResending = resendMutation.isPending;
+
+  // Automatically verify immediately after the sixth digit is entered.
+  useEffect(() => {
+    if (code.length !== 6) {
+      lastAttemptedCode.current = null;
+      return;
+    }
+
+    if (!email || isVerifying || isResending) return;
+
+    // Prevent duplicate verification requests for the same code.
+    if (lastAttemptedCode.current === code) return;
+
+    lastAttemptedCode.current = code;
+    setErrorMessage("");
+    setSuccessMessage("");
+
+    verifyEmail(code);
+  }, [code, email, isVerifying, isResending, verifyEmail]);
 
   function handleDigitChange(index, value) {
     const digit = value.replace(/\D/g, "").slice(-1);
@@ -88,6 +189,8 @@ function VerifyEmailContent() {
 
     setDigits(updated);
     setErrorMessage("");
+    setSuccessMessage("");
+
     inputRefs.current[Math.min(pastedDigits.length, 5)]?.focus();
   }
 
@@ -109,97 +212,6 @@ function VerifyEmailContent() {
     }
   }
 
-  const verificationMutation = useMutation({
-    mutationFn: async () => {
-      const response = await api.post("/verify-email", {
-        email,
-        code: digits.join(""),
-      });
-
-      return response.data;
-    },
-
-    onSuccess: () => {
-      router.replace("/connect-channels");
-    },
-
-    onError: (error) => {
-      setErrorMessage(
-        error.response?.data?.message ||
-          "Verification failed. Please check your code and try again."
-      );
-    },
-  });
-
-  const resendMutation = useMutation({
-    mutationFn: async () => {
-      const response = await api.post("/resend-code", { email });
-      return response.data;
-    },
-
-    onSuccess: (data) => {
-      setDigits(["", "", "", "", "", ""]);
-      setSecondsLeft(60);
-      setErrorMessage("");
-      setSuccessMessage("A new verification code has been sent.");
-
-      const cooldownEndsAt = data?.data?.cooldownEndsAt;
-
-      if (cooldownEndsAt) {
-        const remaining = Math.max(
-          0,
-          Math.ceil((new Date(cooldownEndsAt).getTime() - Date.now()) / 1000)
-        );
-
-        setCooldownSeconds(remaining);
-      }
-
-      inputRefs.current[0]?.focus();
-    },
-
-    onError: (error) => {
-      const responseData = error.response?.data;
-
-      setErrorMessage(
-        responseData?.message ||
-          "Could not resend your verification code. Please try again."
-      );
-
-      const cooldownEndsAt = responseData?.data?.cooldownEndsAt;
-
-      if (cooldownEndsAt) {
-        const remaining = Math.max(
-          0,
-          Math.ceil((new Date(cooldownEndsAt).getTime() - Date.now()) / 1000)
-        );
-
-        setCooldownSeconds(remaining);
-      }
-    },
-  });
-
-  function handleSubmit(event) {
-    event.preventDefault();
-
-    if (!email) {
-      setErrorMessage("Email address is missing. Please register again.");
-      return;
-    }
-
-    const code = digits.join("");
-
-    if (code.length !== 6) {
-      setErrorMessage("Please enter all six digits of your verification code.");
-      return;
-    }
-
-    setErrorMessage("");
-    verificationMutation.mutate();
-  }
-
-  const isVerifying = verificationMutation.isPending;
-  const isResending = resendMutation.isPending;
-
   const canResend =
     secondsLeft === 0 &&
     cooldownSeconds === 0 &&
@@ -218,16 +230,18 @@ function VerifyEmailContent() {
           <header className="register-header">
             <p className="register-eyebrow">EMAIL VERIFICATION</p>
             <h1>Verify your email.</h1>
+
             <p className="register-description">
-              We ve sent a six-digit verification code to:
+              We&rsquo;ve sent a six-digit verification code to:
               <strong className="verify-email-address">
                 {email || "Your email address"}
               </strong>
-              Enter the code below to activate your account.
+              Enter the code below. Your account will be verified
+              automatically.
             </p>
           </header>
 
-          <form className="verify-form" onSubmit={handleSubmit}>
+          <div className="verify-form">
             <div className="verify-code-label">VERIFICATION CODE</div>
 
             <div className="verify-code-inputs">
@@ -244,7 +258,7 @@ function VerifyEmailContent() {
                   maxLength={1}
                   value={digit}
                   aria-label={`Verification digit ${index + 1}`}
-                  disabled={isVerifying}
+                  disabled={isVerifying || isResending || !email}
                   onChange={(event) =>
                     handleDigitChange(index, event.target.value)
                   }
@@ -265,6 +279,12 @@ function VerifyEmailContent() {
               )}
             </div>
 
+            {isVerifying && (
+              <p className="verify-message" role="status">
+                Verifying your email...
+              </p>
+            )}
+
             {errorMessage && (
               <p className="verify-message verify-error" role="alert">
                 {errorMessage}
@@ -276,24 +296,10 @@ function VerifyEmailContent() {
                 {successMessage}
               </p>
             )}
-
-            <button
-              className="register-submit-button verify-submit-button"
-              type="submit"
-              disabled={
-                isVerifying ||
-                isResending ||
-                digits.join("").length !== 6 ||
-                !email
-              }
-            >
-              {isVerifying ? "Verifying..." : "Verify email"}
-              <span aria-hidden="true">→</span>
-            </button>
-          </form>
+          </div>
 
           <div className="verify-resend">
-            <p>Didnt receive the code?</p>
+            <p>Didn&rsquo;t receive the code?</p>
 
             {cooldownSeconds > 0 ? (
               <p className="verify-cooldown">
@@ -368,7 +374,9 @@ function VerifyEmailContent() {
             <div className="verify-preview-content">
               <span className="verify-preview-icon">✓</span>
               <strong>Verify your account</strong>
-              <p>Your email confirmation is the first step to getting started.</p>
+              <p>
+                Your email confirmation is the first step to getting started.
+              </p>
             </div>
 
             <div className="register-preview-bottom">
