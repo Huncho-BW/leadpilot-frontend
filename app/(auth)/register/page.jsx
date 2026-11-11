@@ -191,87 +191,96 @@ const registrationMutation = useMutation({
 
       {/* Keep your existing right-side visual panel unchanged. */}
       {/* Paste your existing register-visual-panel JSX here. */}
-
+    {/* Right panel: visual preview of the CRM workspace */}
       <aside className="register-visual-panel">
-  <div className="register-visual-glow" aria-hidden="true" />
+        <div className="register-visual-glow" aria-hidden="true" />
 
-  <div className="register-visual-content">
-    <div className="register-panel-label">
-      <span className="register-status-dot" />
-      YOUR BUSINESS, CONNECTED
-    </div>
+        <div className="register-visual-content">
+          <div className="register-panel-label">
+            <span className="register-status-dot" />A BETTER WAY TO WORK
+          </div>
 
-    <h2>
-      Better relationships.
-      <br />
-      <span>Stronger business.</span>
-    </h2>
+          <h2>
+            Your business,
+            <br />
+            <span>working as one.</span>
+          </h2>
 
-    <p className="register-panel-description">
-      Bring your leads, customers, and sales activities together in one
-      organised workspace.
-    </p>
+          <p className="register-panel-description">
+            Manage relationships, organise your sales pipeline, and keep your
+            team moving in the same direction.
+          </p>
 
-    <div className="register-preview">
-      <div className="register-preview-topbar">
-        <div className="register-preview-brand">
-          <span className="register-preview-icon">C</span>
-          Workspace overview
+          {/* Illustrative preview of the CRM's main modules */}
+          <div className="register-preview">
+            <div className="register-preview-topbar">
+              <div className="register-preview-brand">
+                <span className="register-preview-icon">C</span>
+                Your workspace
+              </div>
+
+              <span className="register-preview-status">
+                <span />
+                Ready to grow
+              </span>
+            </div>
+
+            <div className="register-preview-welcome">
+              <span>WORKSPACE OVERVIEW</span>
+              <strong>Everything starts here.</strong>
+              <p>Your business, organised in one place.</p>
+            </div>
+
+            <div className="register-preview-grid">
+              <div className="register-preview-card">
+                <span className="register-preview-card-icon leads-card-icon">
+                  L
+                </span>
+                <strong>Leads</strong>
+                <small>Discover opportunities</small>
+              </div>
+
+              <div className="register-preview-card">
+                <span className="register-preview-card-icon deals-card-icon">
+                  D
+                </span>
+                <strong>Deals</strong>
+                <small>Track your pipeline</small>
+              </div>
+
+              <div className="register-preview-card">
+                <span className="register-preview-card-icon customers-card-icon">
+                  C
+                </span>
+                <strong>Customers</strong>
+                <small>Build relationships</small>
+              </div>
+
+              <div className="register-preview-card">
+                <span className="register-preview-card-icon team-card-icon">
+                  T
+                </span>
+                <strong>Teamwork</strong>
+                <small>Keep everyone aligned</small>
+              </div>
+            </div>
+
+            <div className="register-preview-bottom">
+              <span className="register-preview-check">✓</span>
+              <span>
+                <strong>One connected workspace</strong>
+                <small>Less scattered work. More clarity.</small>
+              </span>
+            </div>
+          </div>
+
+          <div className="register-panel-bottom">
+            <span>YOUR TEAM.</span>
+            <span>YOUR CUSTOMERS.</span>
+            <span>ONE WORKSPACE.</span>
+          </div>
         </div>
-
-        <span className="register-preview-status">
-          <span />
-          Workspace active
-        </span>
-      </div>
-
-      <div className="register-preview-welcome">
-        <span>YOUR WORKSPACE</span>
-        <strong>Everything in one place.</strong>
-        <p>Manage your business with confidence.</p>
-      </div>
-
-      <div className="register-preview-grid">
-        <div className="register-preview-card">
-          <span className="register-preview-card-icon leads-card-icon">L</span>
-          <strong>Lead management</strong>
-          <small>Track opportunities</small>
-        </div>
-
-        <div className="register-preview-card">
-          <span className="register-preview-card-icon deals-card-icon">D</span>
-          <strong>Sales pipeline</strong>
-          <small>Manage your deals</small>
-        </div>
-
-        <div className="register-preview-card">
-          <span className="register-preview-card-icon customers-card-icon">C</span>
-          <strong>Customers</strong>
-          <small>Build relationships</small>
-        </div>
-
-        <div className="register-preview-card">
-          <span className="register-preview-card-icon team-card-icon">T</span>
-          <strong>Team workspace</strong>
-          <small>Work together</small>
-        </div>
-      </div>
-
-      <div className="register-preview-bottom">
-        <span className="register-preview-check">✓</span>
-        <span>
-          <strong>Your workspace is ready</strong>
-          <small>Everything you need to stay organised.</small>
-        </span>
-      </div>
-    </div>
-
-    <div className="register-panel-bottom">
-      <span>ONE WORKSPACE.</span>
-      <span>BETTER WORKFLOWS.</span>
-    </div>
-  </div>
-</aside>
+      </aside>
     </main>
   );
 }
