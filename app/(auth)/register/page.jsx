@@ -191,6 +191,87 @@ const registrationMutation = useMutation({
 
       {/* Keep your existing right-side visual panel unchanged. */}
       {/* Paste your existing register-visual-panel JSX here. */}
+
+      <aside className="register-visual-panel">
+  <div className="register-visual-glow" aria-hidden="true" />
+
+  <div className="register-visual-content">
+    <div className="register-panel-label">
+      <span className="register-status-dot" />
+      YOUR BUSINESS, CONNECTED
+    </div>
+
+    <h2>
+      Better relationships.
+      <br />
+      <span>Stronger business.</span>
+    </h2>
+
+    <p className="register-panel-description">
+      Bring your leads, customers, and sales activities together in one
+      organised workspace.
+    </p>
+
+    <div className="register-preview">
+      <div className="register-preview-topbar">
+        <div className="register-preview-brand">
+          <span className="register-preview-icon">C</span>
+          Workspace overview
+        </div>
+
+        <span className="register-preview-status">
+          <span />
+          Workspace active
+        </span>
+      </div>
+
+      <div className="register-preview-welcome">
+        <span>YOUR WORKSPACE</span>
+        <strong>Everything in one place.</strong>
+        <p>Manage your business with confidence.</p>
+      </div>
+
+      <div className="register-preview-grid">
+        <div className="register-preview-card">
+          <span className="register-preview-card-icon leads-card-icon">L</span>
+          <strong>Lead management</strong>
+          <small>Track opportunities</small>
+        </div>
+
+        <div className="register-preview-card">
+          <span className="register-preview-card-icon deals-card-icon">D</span>
+          <strong>Sales pipeline</strong>
+          <small>Manage your deals</small>
+        </div>
+
+        <div className="register-preview-card">
+          <span className="register-preview-card-icon customers-card-icon">C</span>
+          <strong>Customers</strong>
+          <small>Build relationships</small>
+        </div>
+
+        <div className="register-preview-card">
+          <span className="register-preview-card-icon team-card-icon">T</span>
+          <strong>Team workspace</strong>
+          <small>Work together</small>
+        </div>
+      </div>
+
+      <div className="register-preview-bottom">
+        <span className="register-preview-check">✓</span>
+        <span>
+          <strong>Your workspace is ready</strong>
+          <small>Everything you need to stay organised.</small>
+        </span>
+      </div>
+    </div>
+
+    <div className="register-panel-bottom">
+      <span>ONE WORKSPACE.</span>
+      <span>BETTER WORKFLOWS.</span>
+    </div>
+  </div>
+</aside>
     </main>
   );
 }
