@@ -11,8 +11,7 @@ export default function RegisterPage() {
   const router = useRouter();
 
 
- 
-const registrationMutation = useMutation({
+ const registrationMutation = useMutation({
   mutationFn: async (registrationData) => {
     const response = await api.post("/register", registrationData);
     return response.data;
@@ -27,20 +26,22 @@ const registrationMutation = useMutation({
   },
 
   onError: (error, registrationData) => {
-    const message = error?.response?.data?.message || "";
+    const errorCode = error?.response?.data?.code;
 
-    if (
-      error?.response?.status === 409 &&
-      message.toLowerCase().includes("already pending")
-    ) {
+    // A pending registration should continue to email verification.
+    if (errorCode === "REGISTRATION_ALREADY_PENDING") {
       const email = registrationData.email.trim().toLowerCase();
 
       router.push(
         `/verify-email?email=${encodeURIComponent(email)}`
       );
     }
+
+    // EMAIL_ALREADY_REGISTERED stays on the registration page.
+    // The error message will be displayed below the form.
   },
 });
+
 
 
 
@@ -169,12 +170,12 @@ const registrationMutation = useMutation({
               <span aria-hidden="true">→</span>
             </button>
 
-            {registrationMutation.isError && (
-              <p role="alert">
-                {registrationMutation.error?.response?.data?.message ||
-                  "Could not complete registration. Please try again."}
-              </p>
-            )}
+           {registrationMutation.isError && (
+  <p role="alert">
+    {registrationMutation.error?.response?.data?.message ||
+      "Could not complete registration. Please try again."}
+  </p>
+)}
           </form>
 
           <footer className="register-footer">
