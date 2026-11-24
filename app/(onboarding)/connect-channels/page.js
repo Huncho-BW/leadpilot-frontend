@@ -1,101 +1,184 @@
+
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import "../../styles/onboarding.css";
+
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL ||
+  "http://localhost:4000/api/v1";
 
 const channels = [
   {
     name: "Instagram",
+    provider: "INSTAGRAM",
     description: "Manage enquiries from your Instagram business presence.",
     initials: "IG",
     className: "instagram",
+    available: true,
   },
   {
     name: "TikTok",
+    provider: "TIKTOK",
     description: "Organize potential customers discovering products on TikTok.",
     initials: "TT",
     className: "tiktok",
+    available: false,
   },
   {
     name: "WhatsApp Business",
+    provider: "WHATSAPP",
     description: "Keep customer conversations and enquiries organized.",
     initials: "WA",
     className: "whatsapp",
+    available: false,
   },
   {
     name: "Facebook",
+    provider: "FACEBOOK",
     description: "Organize eligible enquiries from Facebook.",
     initials: "f",
     className: "facebook",
+    available: false,
   },
   {
     name: "X",
+    provider: "X",
     description: "Keep track of relevant enquiries from X where supported.",
     initials: "X",
     className: "x-twitter",
+    available: false,
   },
 ];
 
-export default function ConnectChannelsPage() {
+const instagramMessages = {
+  success: "Your Instagram account has been connected successfully.",
+  denied:
+    "Instagram authorization was cancelled or declined. You can try again whenever you're ready.",
+  failed:
+    "Instagram authorization could not be completed. Please try again.",
+  session_expired:
+    "Your onboarding session has expired. Please sign in again.",
+};
+
+function ConnectChannelsContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
-  // Demo-only state: this does not authorize a real social account.
-  const [connectedChannels, setConnectedChannels] = useState([]);
-  const [instagramResult, setInstagramResult] = useState(null);
+  const [connections, setConnections] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isConnecting, setIsConnecting] = useState(false);
+  const [loadError, setLoadError] = useState("");
 
-  // Read the Instagram OAuth result when the user returns.
+  const instagramStatus = searchParams.get("instagram");
+
+  const instagramResult =
+    instagramStatus && Object.hasOwn(instagramMessages, instagramStatus)
+      ? {
+          status: instagramStatus,
+          message: instagramMessages[instagramStatus],
+        }
+      : null;
+
+  // Load saved social account connections.
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const result = params.get("instagram");
+    let cancelled = false;
 
-    const messages = {
-      success:
-        "Instagram authorization succeeded. The account has not yet been saved to this workspace.",
-      denied:
-        "Instagram authorization was cancelled or declined. You can try again whenever you're ready.",
-      failed:
-        "Instagram authorization could not be completed. Please try again.",
+    fetch(`${API_BASE_URL}/integrations`, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        Accept: "application/json",
+      },
+      cache: "no-store",
+    })
+      .then(async (response) => {
+        const result = await response.json().catch(() => null);
+
+        if (!response.ok || !result?.success) {
+          throw new Error(
+            result?.message || "Unable to load your connected channels.",
+          );
+        }
+
+        if (!cancelled) {
+          setConnections(Array.isArray(result.data) ? result.data : []);
+          setLoadError("");
+        }
+      })
+      .catch((error) => {
+        if (!cancelled) {
+          setLoadError(
+            error.message || "Unable to load your connected channels.",
+          );
+        }
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setIsLoading(false);
+        }
+      });
+
+    return () => {
+      cancelled = true;
     };
+  }, []);
 
-    if (!result || !Object.hasOwn(messages, result)) {
+  // Remove the Instagram result from the URL after reading it.
+  useEffect(() => {
+    if (!instagramStatus) {
       return;
     }
 
-    setInstagramResult({
-      status: result,
-      message: messages[result],
-    });
-
-    // Remove only the Instagram result from the address bar.
+    const params = new URLSearchParams(window.location.search);
     params.delete("instagram");
 
     const query = params.toString();
+
     const cleanUrl = `${window.location.pathname}${
       query ? `?${query}` : ""
     }${window.location.hash}`;
 
     window.history.replaceState(window.history.state, "", cleanUrl);
-  }, []);
+  }, [instagramStatus]);
 
-  function handleConnect(channelName) {
-    if (channelName === "Instagram") {
-      const returnTo = encodeURIComponent("/connect-channels");
+  function getProviderConnections(provider) {
+    return connections.filter(
+      (connection) =>
+        connection.provider === provider &&
+        connection.status === "CONNECTED",
+    );
+  }
 
-      window.location.href = `https://leadpilot-backend-mbx0.onrender.com/api/v1/auth/instagram?returnTo=${returnTo}`;
+  function isProviderConnected(provider) {
+    return getProviderConnections(provider).length > 0;
+  }
 
+  function handleConnect(channel) {
+    if (!channel.available || isConnecting) {
       return;
     }
 
-    // Keep demo behavior for the other channels.
-    setConnectedChannels((current) =>
-      current.includes(channelName) ? current : [...current, channelName],
-    );
+    if (channel.provider === "INSTAGRAM") {
+      setIsConnecting(true);
+
+      const returnTo = encodeURIComponent("/connect-channels");
+
+      const authorizationUrl =
+        `${API_BASE_URL}/auth/instagram?returnTo=${returnTo}`;
+
+      window.open(authorizationUrl, "_self");
+    }
   }
 
   function goToDashboard() {
     router.push("/dashboard");
   }
+
+  const connectedCount = channels.filter((channel) =>
+    isProviderConnected(channel.provider),
+  ).length;
 
   return (
     <main className="onboarding-page">
@@ -121,7 +204,7 @@ export default function ConnectChannelsPage() {
         </div>
 
         <section className="onboarding-intro">
-          <span className="eyebrow">LET'S SET UP YOUR WORKSPACE</span>
+          <span className="eyebrow">LET&apos;S SET UP YOUR WORKSPACE</span>
 
           <h1>Bring your customer enquiries together.</h1>
 
@@ -144,6 +227,26 @@ export default function ConnectChannelsPage() {
           </aside>
         )}
 
+        {loadError && (
+          <aside className="onboarding-notice" role="alert">
+            <span className="notice-icon" aria-hidden="true">
+              !
+            </span>
+
+            <p>
+              <strong>Connection status unavailable</strong>
+              <span>{loadError}</span>
+            </p>
+
+            <button
+              type="button"
+              onClick={() => window.location.reload()}
+            >
+              Try again
+            </button>
+          </aside>
+        )}
+
         <section className="channels-section">
           <div className="section-heading">
             <div>
@@ -156,10 +259,14 @@ export default function ConnectChannelsPage() {
 
           <div className="channels-grid">
             {channels.map((channel) => {
-              const isConnected = connectedChannels.includes(channel.name);
+              const providerConnections = getProviderConnections(
+                channel.provider,
+              );
+
+              const isConnected = providerConnections.length > 0;
 
               return (
-                <article className="channel-card" key={channel.name}>
+                <article className="channel-card" key={channel.provider}>
                   <div className="channel-card-top">
                     <span
                       className={`channel-icon ${channel.className}`}
@@ -174,23 +281,55 @@ export default function ConnectChannelsPage() {
                       }`}
                     >
                       <span className="status-dot" />
-                      {isConnected ? "Demo connected" : "Not connected"}
+
+                      {isLoading
+                        ? "Checking..."
+                        : isConnected
+                          ? "Connected"
+                          : channel.available
+                            ? "Not connected"
+                            : "Coming soon"}
                     </span>
                   </div>
 
                   <h3>{channel.name}</h3>
 
-                  <p className="channel-description">{channel.description}</p>
+                  <p className="channel-description">
+                    {channel.description}
+                  </p>
+
+                  {isConnected && (
+                    <p className="channel-description">
+                      {providerConnections.length} account
+                      {providerConnections.length === 1 ? "" : "s"} connected
+                      {providerConnections[0].accountName
+                        ? ` · ${providerConnections[0].accountName}`
+                        : ""}
+                    </p>
+                  )}
 
                   <button
                     className={`channel-button ${
                       isConnected ? "channel-button-connected" : ""
                     }`}
                     type="button"
-                    onClick={() => handleConnect(channel.name)}
-                    disabled={isConnected}
+                    onClick={() => handleConnect(channel)}
+                    disabled={
+                      isLoading ||
+                      isConnecting ||
+                      isConnected ||
+                      !channel.available
+                    }
                   >
-                    {isConnected ? "Connected for demo ✓" : "Connect account"}
+                    {isLoading
+                      ? "Checking status..."
+                      : isConnected
+                        ? "Connected ✓"
+                        : !channel.available
+                          ? "Coming soon"
+                          : isConnecting
+                            ? "Redirecting..."
+                            : "Connect account"}
                   </button>
                 </article>
               );
@@ -206,20 +345,20 @@ export default function ConnectChannelsPage() {
           <p>
             <strong>Account access and privacy</strong>
             <span>
-              Real connections require authorization through each platform.
-              These demo buttons only change the screen; they do not access
-              accounts or retrieve leads.
+              Social accounts are connected through their official
+              authorization processes. LeadPilot stores connection credentials
+              securely and uses them to support authorized CRM features.
             </span>
           </p>
         </aside>
 
         <footer className="onboarding-footer">
           <p>
-            {connectedChannels.length > 0
-              ? `${connectedChannels.length} demo ${
-                  connectedChannels.length === 1 ? "channel" : "channels"
-                } selected.`
-              : "You can connect or manage channels later in Settings."}
+            {isLoading
+              ? "Checking your connected channels..."
+              : `${connectedCount} ${
+                  connectedCount === 1 ? "channel" : "channels"
+                } connected.`}
           </p>
 
           <div className="onboarding-actions">
@@ -243,5 +382,21 @@ export default function ConnectChannelsPage() {
         </footer>
       </section>
     </main>
+  );
+}
+
+export default function ConnectChannelsPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="onboarding-page">
+          <section className="onboarding-container">
+            <p>Loading your workspace...</p>
+          </section>
+        </main>
+      }
+    >
+      <ConnectChannelsContent />
+    </Suspense>
   );
 }

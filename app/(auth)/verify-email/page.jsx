@@ -53,10 +53,16 @@ function VerifyEmailContent() {
 
   const verificationMutation = useMutation({
     mutationFn: async (code) => {
-      const response = await api.post("/verify-email", {
-        email,
-        code,
-      });
+      const response = await api.post(
+        "/verify-email",
+        {
+          email,
+          code,
+        },
+        {
+          withCredentials: true,
+        }
+      );
 
       return response.data;
     },
@@ -75,7 +81,14 @@ function VerifyEmailContent() {
 
   const resendMutation = useMutation({
     mutationFn: async () => {
-      const response = await api.post("/resend-code", { email });
+      const response = await api.post(
+        "/resend-code",
+        { email },
+        {
+          withCredentials: true,
+        }
+      );
+
       return response.data;
     },
 
